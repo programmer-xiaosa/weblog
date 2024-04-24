@@ -1,0 +1,40 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    #  指定数据库驱动类
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接信息
+    url: jdbc:mysql://172.17.0.1:3306/weblog?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+    hikari: # 数据库连接池使用 Hikari
+      minimum-idle: 5 # 连接池中最小空闲连接数
+      maximum-pool-size: 20 # 连接池中允许的最大连接数
+      auto-commit: true # 是否自动提交事务
+      idle-timeout: 30000 # 连接在连接池中闲置的最长时间，超过这个时间会被释放。
+      pool-name: Weblog-HikariCP # 自定义连接池的名字
+      max-lifetime: 1800000 # 连接在连接池中的最大存活时间，超过这个时间会被强制关闭。
+      connection-timeout: 30000 # 连接的超时时间
+      connection-test-query: SELECT 1 # 用于测试连接是否可用的SQL查询
+
+#=================================================================
+# log 日志
+#=================================================================
+logging:
+  config: classpath:logback-weblog.xml
+
+#=================================================================
+# minio (上传图片需要，需配置成自己的地址)
+#=================================================================
+minio:
+  endpoint: #endpoint
+  accessKey:  #accessKey
+  secretKey: #secretKey
+  bucketName:  # bucketName
+
+#=================================================================
+# Lucene 全文检索
+#=================================================================
+lucene:
+  indexDir: /app/weblog/lucene-index # lucene 索引存放的位置
